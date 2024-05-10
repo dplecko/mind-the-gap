@@ -98,8 +98,10 @@ preproc_census <- function(data, sfm) {
       # remove the original factor column
       data[[colname]] <- NULL
       
-      # update the SFM
+      # ensure there are no spaces in column names
+      colnames(encoded) <- gsub(" ", "_", colnames(encoded))
       
+      # update the SFM
       for (part in c("X", "Z", "W", "Y")) {
         
         if (is.element(colname, sfm[[part]])) {
