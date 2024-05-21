@@ -193,8 +193,10 @@ sample_influence <- function(total, base, wgh, effect = "DE") {
          aes(x = order, y = value, fill = variable)) +
     theme_bw() +
     geom_col(position = position_stack(reverse = TRUE), alpha = 0.5) +
-    scale_fill_manual(name = "Component", labels = c("Base", "MTG"), 
-                      values = c("#00BFC4", "#F8766D")) +
+    scale_fill_manual(values = c("#00BFC4", "#F8766D"),
+                      labels = c(TeX("Outcome $Y$"), 
+                                 TeX("Margin Complement $M$")),
+                      name = "Component") +
     xlab("Sample Ranking") + ylab("Sample Influence") +
     theme(legend.position = "bottom") +
     guides(fill = guide_legend(override.aes = list(colour = "black")))
@@ -234,10 +236,13 @@ vis_mtg <- function(mtg, type = c("natural", "counterfactual"), dataset = "",
 
   p_eff <- ggplot(data, aes(x = effect, y = value, fill = Component)) +
     theme_bw() +
-    geom_col(alpha = 0.5, color = "black", position = position_stack(reverse = TRUE)) +
+    geom_col(alpha = 0.5, color = "black", 
+             position = position_stack(reverse = TRUE)) +
     geom_errorbar(aes(ymin = ymin, ymax = ymax), width = 0.4,
                   color = "darkgrey") +
-    scale_fill_manual(values = c("#00BFC4", "#F8766D")) +
+    scale_fill_manual(values = c("#00BFC4", "#F8766D"),
+                      labels = c(TeX("Outcome $Y$"), 
+                                 TeX("Margin Complement $M$"))) +
     xlab("Causal Effect") + ylab("Effect Size") +
     theme(legend.position = "bottom") +
     ggtitle(paste0(srcwrap(dataset), " Decomposition"))

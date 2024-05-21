@@ -3,6 +3,8 @@ root <- rprojroot::find_root(rprojroot::is_git_root)
 r_dir <- file.path(root, "R")
 invisible(lapply(list.files(r_dir, full.names = TRUE), source))
 
+set.seed(2024)
+
 # load COMPAS
 c(data, sfm) %<-% preproc_compas()
 
@@ -13,7 +15,6 @@ mtg_opt <- mind_the_gap(data, X = sfm$X, Z = sfm$Z, W = sfm$W, Y = sfm$Y,
 # run the algorithm on the Northpointe predictor
 mtg_np <- mind_the_gap(data, X = sfm$X, Z = sfm$Z, W = sfm$W, Y = sfm$Y, 
                        Shat = "np_shat", nboot = 50)
-
 
 # Part A: Y vs Shat^NP decomposition
 ctf_meas <- function(x, out) {
